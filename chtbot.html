@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chatbot Belajar Visual</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f5f7fa;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+
+    .chat-container {
+      width: 100%;
+      max-width: 420px;
+      height: 90vh;
+      background: #fff;
+      border-radius: 20px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    .chat-box {
+      flex: 1;
+      padding: 15px;
+      overflow-y: auto;
+    }
+
+    .message {
+      margin: 8px 0;
+      padding: 10px 14px;
+      border-radius: 15px;
+      max-width: 80%;
+      line-height: 1.4;
+      word-wrap: break-word;
+    }
+
+    .user {
+      background: #0078ff;
+      color: white;
+      align-self: flex-end;
+      border-bottom-right-radius: 0;
+    }
+
+    .bot {
+      background: #e5e7eb;
+      color: #333;
+      align-self: flex-start;
+      border-bottom-left-radius: 0;
+    }
+
+    .message img {
+      max-width: 200px;
+      border-radius: 10px;
+      margin-top: 5px;
+      display: block;
+    }
+
+    .message a {
+      display: inline-block;
+      margin-top: 6px;
+      padding: 8px 12px;
+      background: #0078ff;
+      color: white;
+      text-decoration: none;
+      border-radius: 8px;
+      font-size: 14px;
+    }
+
+    .input-area {
+      display: flex;
+      padding: 10px;
+      border-top: 1px solid #ddd;
+      background: #fafafa;
+    }
+
+    .input-area input {
+      flex: 1;
+      padding: 10px;
+      border-radius: 10px;
+      border: 1px solid #ccc;
+      outline: none;
+    }
+
+    .input-area button {
+      margin-left: 8px;
+      border: none;
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      cursor: pointer;
+      font-size: 18px;
+      color: white;
+    }
+
+    .send-btn {
+      background: #0078ff;
+    }
+
+    .voice-btn {
+      background: #ff5c5c;
+    }
+  </style>
+</head>
+<body>
+  <div class="chat-container">
+    <div class="chat-box" id="chatBox" style="white-space: pre-line;"></div>
+    <div class="input-area">
+      <input type="text" id="userInput" placeholder="Tulis pertanyaan...">
+      <button class="send-btn" onclick="sendMessage()">➤</button>
+      <button class="voice-btn" onclick="startVoice()">🎤</button>
+    </div>
+  </div>
+
+  <script>
+    const chatBox = document.getElementById("chatBox");
+    const userInput = document.getElementById("userInput");
+
+    // Database pertanyaan & jawaban
+    const knowledgeBase = [
+      { q: ["halo", "hai"], a: [{ type: "text", content: "Halo! Senang bisa membantu kamu belajar 😊" }] },
+      { q: ["accelerando", "accel.", "accel"], a: [
+        { type: "text", content: "Accelerando atau accel adalah istilah dari bahasa Itali dalam musik yang berarti secara bertahap menjadi lebih cepat, atau semakin lama semakin cepat." }
+      ]},
+      { q: ["adagio"], a: [
+        { type: "text", content: "Adagio adalah istilah dari bahasa Itali dalam musik yang berarti tempo yang digunakan adalah lambat, sekitar 66–75 bpm. Lebih cepat dari Largo tapi lebih lambat dari Andante." }
+      ]},
+      { q: ["allegretto"], a: [
+        { type: "text", content: "Allegretto adalah istilah musik dari bahasa Itali yang artinya cepat, atau riang gembira. Allegretto lebih santai dari Allegro, sekitar 98–109 bpm." }
+      ]},
+      { q: ["allegro"], a: [{ type: "text", content: "Allegro adalah istilah musik dari bahasa Itali yang berarti cepat dan ceria. Tempo sekitar 120–168 bpm dengan suasana riang serta bersemangat." }] },
+      { q: ["andante"], a: [{ type: "text", content: "Andante artinya tempo seperti berjalan santai, tidak cepat dan tidak lambat. Kisaran 76–108 bpm." }] },
+      { q: ["cantabile"], a: [{ type: "text", content: "Cantabile artinya 'seperti bernyanyi'. Ini menunjuk pada gaya bermain, bukan tempo. Lagu harus dimainkan dengan ekspresif, seolah-olah suara manusia yang bernyanyi." }] },
+      { q: ["crescendo", "cresc.", "cresc"], a: [{ type: "text", content: "Crescendo berarti semakin lama semakin keras. Volume suara bertambah secara bertahap." }] },
+      { q: ["decrescendo", "decresc.", "decresc"], a: [{ type: "text", content: "Decrescendo berarti semakin lama semakin lembut. Volume suara menurun secara perlahan." }] },
+      { q: ["da capo", "d.c."], a: [{ type: "text", content: "Da Capo (D.C.) artinya 'kembali ke awal'. Contoh: D.C. al Fine = kembali ke awal lalu berhenti di Fine." }] },
+      { q: ["dal segno", "d.s."], a: [{ type: "text", content: "Dal Segno (D.S.) artinya kembali ke tanda segno. Contoh: D.S. al Fine = kembali ke segno lalu berhenti di Fine." }] },
+      { q: ["diminuendo", "dim."], a: [{ type: "text", content: "Diminuendo (dim.) artinya semakin lama semakin lembut, sama seperti decrescendo." }] },
+      { q: ["fine"], a: [{ type: "text", content: "Fine artinya 'Akhir' atau tanda selesai." }] },
+      { q: ["forte","f"], a: [{ type: "text", content: "Forte (f) artinya 'keras' atau 'nyaring'." }] },
+      { q: ["fortissimo", "ff"], a: [{ type: "text", content: "Fortissimo (ff) artinya 'sangat keras' atau 'sangat nyaring'." }] },
+      { q: ["legato"], a: [{ type: "text", content: "Legato artinya memainkan nada dengan halus, menyambung tanpa jeda." }] },
+      { q: ["lento"], a: [{ type: "text", content: "Lento artinya 'lambat'. Kisaran tempo sekitar 40–60 bpm." }] },
+      { q: ["mezzo"], a: [{ type: "text", content: "Mezzo artinya 'setengah' atau 'cukup'. Contoh: mezzo piano (mp) = cukup lembut, mezzo forte (mf) = cukup keras." }] },
+      { q: ["mezzo forte", "mf"], a: [{ type: "text", content: "Mezzo Forte (mf) adalah istilah musik dari bahasa Itali yang berarti 'cukup keras'. Dinamikanya berada di antara 'mezzo piano' (cukup lembut) dan 'forte' (keras). Biasanya digunakan untuk menjaga keseimbangan agar tidak terlalu lembut tapi juga tidak terlalu keras." }] },
+      { q: ["mezzo piano", "mp"], a: [{ type: "text", content: "Mezzo Piano (mp) adalah istilah musik dari bahasa Itali yang berarti 'cukup lembut'. Dinamikanya berada di antara 'piano' dan 'mezzo forte'. Biasanya digunakan untuk menjaga keseimbangan agar tidak terlalu lembut tapi juga tidak terlalu keras." }] },
+      { q: ["moderato"], a: [{ type: "text", content: "moderately (allegro moderato: moderately quick)" }] },
+      { q: ["piano", "p"], a: [{ type: "text", content: "quite" }] },
+      { q: ["pianissimo", "pp"], a: [{ type: "text", content: "very quiet" }] },
+      { q: ["poco"], a: [{ type: "text", content: "a little" }] },
+      { q: ["rallentando", "rall"], a: [{ type: "text", content: "gradually getting slower." }] },
+      { q: ["ritardando", "ritard.", "rit."], a: [{ type: "text", content: "gradually getting slower." }] },
+      { q: ["ritenuto", "riten.", "rit."], a: [{ type: "text", content: "held back" }] },
+      { q: ["staccato", "stacc."], a: [{ type: "text", content: "detached" }] },
+      { q: ["tempo"], a: [{ type: "text", content: "speed, tim (a tempo: in time)" }] },
+      { q: ["terima kasih"], a: [{ type: "text", content: "Sama-sama! Semangat terus ya 💪" }] }
+    ];
+
+    // Tambahkan pesan ke layar
+    function addMessage(content, sender, type="text") {
+      const msg = document.createElement("div");
+      msg.classList.add("message", sender);
+
+      if (type === "text") {
+        msg.textContent = content;
+      } else if (type === "image") {
+        msg.innerHTML = `<img src="${content}" alt="gambar pembelajaran">`;
+      } else if (type === "pdf") {
+        msg.innerHTML = `<a href="${content}" target="_blank">📄 Unduh PDF</a>`;
+      }
+
+      chatBox.appendChild(msg);
+      chatBox.scrollTop = chatBox.scrollHeight;
+    }
+
+    // Hitung kemiripan 2 string (rasio 0-1)
+    function similarity(s1, s2) {
+      let longer = s1.toLowerCase();
+      let shorter = s2.toLowerCase();
+      if (longer.length < shorter.length) {
+        let temp = longer;
+        longer = shorter;
+        shorter = temp;
+      }
+      let longerLength = longer.length;
+      if (longerLength === 0) return 1.0;
+      return (longerLength - editDistance(longer, shorter)) / longerLength;
+    }
+
+    // Levenshtein Distance
+    function editDistance(s1, s2) {
+      s1 = s1.toLowerCase();
+      s2 = s2.toLowerCase();
+
+      let costs = [];
+      for (let i = 0; i <= s1.length; i++) {
+        let lastValue = i;
+        for (let j = 0; j <= s2.length; j++) {
+          if (i === 0) {
+            costs[j] = j;
+          } else {
+            if (j > 0) {
+              let newValue = costs[j - 1];
+              if (s1.charAt(i - 1) !== s2.charAt(j - 1)) {
+                newValue = Math.min(Math.min(newValue, lastValue), costs[j]) + 1;
+              }
+              costs[j - 1] = lastValue;
+              lastValue = newValue;
+            }
+          }
+        }
+        if (i > 0) costs[s2.length] = lastValue;
+      }
+      return costs[s2.length];
+    }
+
+    // Cari jawaban (prioritaskan frasa lengkap)
+    function botReply(userText) {
+      const text = userText.toLowerCase().trim();
+      let replies = [];
+      let bestMatch = { word: "", score: 0 };
+
+      // PRIORITAS: cek exact match dulu
+      for (let item of knowledgeBase) {
+        for (let keyword of item.q) {
+          if (text === keyword.toLowerCase()) {
+            replies.push(...item.a);
+            break;
+          }
+        }
+        if (replies.length > 0) break;
+      }
+
+      // Kalau belum ada, cek kemiripan & kata terpisah
+      if (replies.length === 0) {
+        for (let item of knowledgeBase) {
+          for (let keyword of item.q) {
+            let sim = similarity(text, keyword);
+            if (sim > bestMatch.score) {
+              bestMatch = { word: keyword, score: sim };
+            }
+            if (text.includes(keyword) || sim >= 0.5) {
+              replies.push(...item.a);
+              break;
+            }
+          }
+        }
+      }
+
+      // Jika tetap kosong
+      if (replies.length === 0) {
+        replies = [{ type: "text", content: "Maaf, saya belum punya jawaban untuk itu. Coba tanyakan hal lain 😊" }];
+      } else {
+        // Kalau typo tapi mirip, kasih saran
+        if (bestMatch.score < 1 && bestMatch.score >= 0.5) {
+          addMessage(`Maksud kamu: "${bestMatch.word}"?`, "bot");
+        }
+      }
+
+      let spokenText = "";
+      replies.forEach(part => {
+        addMessage(part.content, "bot", part.type);
+        if (part.type === "text") spokenText += part.content + " ";
+      });
+
+      if (spokenText) speak(spokenText);
+    }
+
+    // Kirim pesan teks
+    function sendMessage() {
+      const text = userInput.value.trim();
+      if (text === "") return;
+      addMessage(text, "user");
+      userInput.value = "";
+      setTimeout(() => botReply(text), 600);
+    }
+
+    // Text-to-Speech
+    function speak(text) {
+      const utterance = new SpeechSynthesisUtterance(text);
+      utterance.lang = "id-ID";
+      speechSynthesis.speak(utterance);
+    }
+
+    // Voice Recognition
+    function startVoice() {
+      if (!('webkitSpeechRecognition' in window)) {
+        alert("Browser kamu tidak mendukung voice recognition.");
+        return;
+      }
+      const recognition = new webkitSpeechRecognition();
+      recognition.lang = "id-ID";
+      recognition.start();
+
+      recognition.onresult = function(event) {
+        const transcript = event.results[0][0].transcript;
+        addMessage(transcript, "user");
+        setTimeout(() => botReply(transcript), 600);
+      };
+    }
+
+    // Enter untuk kirim
+    userInput.addEventListener("keypress", function(e) {
+      if (e.key === "Enter") {
+        sendMessage();
+      }
+    });
+  </script>
+</body>
+</html>
