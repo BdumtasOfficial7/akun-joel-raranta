@@ -126,6 +126,8 @@
     // Database pertanyaan & jawaban
     const knowledgeBase = [
       { q: ["halo", "hai"], a: [{ type: "text", content: "Halo! Senang bisa membantu kamu belajar 😊" }] },
+      { q: ["da capo", "d.c."], a: [{ type: "text", content: "Da Capo (D.C.) artinya 'kembali ke awal'. Contoh: D.C. al Fine = kembali ke awal lalu berhenti di Fine." }] },
+      { q: ["dal segno", "d.s."], a: [{ type: "text", content: "Dal Segno (D.S.) artinya kembali ke tanda segno. Contoh: D.S. al Fine = kembali ke segno lalu berhenti di Fine." }] },
       { q: ["accelerando", "accel.", "accel"], a: [
         { type: "text", content: "Accelerando atau accel adalah istilah dari bahasa Itali dalam musik yang berarti secara bertahap menjadi lebih cepat, atau semakin lama semakin cepat." }
       ]},
@@ -140,8 +142,6 @@
       { q: ["cantabile"], a: [{ type: "text", content: "Cantabile artinya 'seperti bernyanyi'. Ini menunjuk pada gaya bermain, bukan tempo. Lagu harus dimainkan dengan ekspresif, seolah-olah suara manusia yang bernyanyi." }] },
       { q: ["crescendo", "cresc.", "cresc"], a: [{ type: "text", content: "Crescendo berarti semakin lama semakin keras. Volume suara bertambah secara bertahap." }] },
       { q: ["decrescendo", "decresc.", "decresc"], a: [{ type: "text", content: "Decrescendo berarti semakin lama semakin lembut. Volume suara menurun secara perlahan." }] },
-      { q: ["da capo", "d.c."], a: [{ type: "text", content: "Da Capo (D.C.) artinya 'kembali ke awal'. Contoh: D.C. al Fine = kembali ke awal lalu berhenti di Fine." }] },
-      { q: ["dal segno", "d.s."], a: [{ type: "text", content: "Dal Segno (D.S.) artinya kembali ke tanda segno. Contoh: D.S. al Fine = kembali ke segno lalu berhenti di Fine." }] },
       { q: ["diminuendo", "dim."], a: [{ type: "text", content: "Diminuendo (dim.) artinya semakin lama semakin lembut, sama seperti decrescendo." }] },
       { q: ["fine"], a: [{ type: "text", content: "Fine artinya 'Akhir' atau tanda selesai." }] },
       { q: ["forte","f"], a: [{ type: "text", content: "Forte (f) artinya 'keras' atau 'nyaring'." }] },
@@ -149,17 +149,17 @@
       { q: ["legato"], a: [{ type: "text", content: "Legato artinya memainkan nada dengan halus, menyambung tanpa jeda." }] },
       { q: ["lento"], a: [{ type: "text", content: "Lento artinya 'lambat'. Kisaran tempo sekitar 40–60 bpm." }] },
       { q: ["mezzo"], a: [{ type: "text", content: "Mezzo artinya 'setengah' atau 'cukup'. Contoh: mezzo piano (mp) = cukup lembut, mezzo forte (mf) = cukup keras." }] },
-      { q: ["mezzo forte", "mf"], a: [{ type: "text", content: "Mezzo Forte (mf) adalah istilah musik dari bahasa Itali yang berarti 'cukup keras'. Dinamikanya berada di antara 'mezzo piano' (cukup lembut) dan 'forte' (keras). Biasanya digunakan untuk menjaga keseimbangan agar tidak terlalu lembut tapi juga tidak terlalu keras." }] },
-      { q: ["mezzo piano", "mp"], a: [{ type: "text", content: "Mezzo Piano (mp) adalah istilah musik dari bahasa Itali yang berarti 'cukup lembut'. Dinamikanya berada di antara 'piano' dan 'mezzo forte'. Biasanya digunakan untuk menjaga keseimbangan agar tidak terlalu lembut tapi juga tidak terlalu keras." }] },
-      { q: ["moderato"], a: [{ type: "text", content: "moderately (allegro moderato: moderately quick)" }] },
-      { q: ["piano", "p"], a: [{ type: "text", content: "quite" }] },
-      { q: ["pianissimo", "pp"], a: [{ type: "text", content: "very quiet" }] },
-      { q: ["poco"], a: [{ type: "text", content: "a little" }] },
-      { q: ["rallentando", "rall"], a: [{ type: "text", content: "gradually getting slower." }] },
-      { q: ["ritardando", "ritard.", "rit."], a: [{ type: "text", content: "gradually getting slower." }] },
-      { q: ["ritenuto", "riten.", "rit."], a: [{ type: "text", content: "held back" }] },
-      { q: ["staccato", "stacc."], a: [{ type: "text", content: "detached" }] },
-      { q: ["tempo"], a: [{ type: "text", content: "speed, tim (a tempo: in time)" }] },
+      { q: ["mezzo forte", "mf"], a: [{ type: "text", content: "Mezzo Forte (mf) artinya 'cukup keras'. Dinamikanya di antara mezzo piano (cukup lembut) dan forte (keras)." }] },
+      { q: ["mezzo piano", "mp"], a: [{ type: "text", content: "Mezzo Piano (mp) artinya 'cukup lembut'. Dinamikanya di antara piano (lembut) dan mezzo forte (cukup keras)." }] },
+      { q: ["moderato"], a: [{ type: "text", content: "Moderato artinya 'sedang'. Contoh: allegro moderato = agak cepat." }] },
+      { q: ["piano", "p"], a: [{ type: "text", content: "Piano (p) artinya 'lembut' atau 'pelan'." }] },
+      { q: ["pianissimo", "pp"], a: [{ type: "text", content: "Pianissimo (pp) artinya 'sangat lembut'." }] },
+      { q: ["poco"], a: [{ type: "text", content: "Poco artinya 'sedikit'." }] },
+      { q: ["rallentando", "rall"], a: [{ type: "text", content: "Rallentando artinya secara bertahap semakin lambat." }] },
+      { q: ["ritardando", "ritard.", "rit."], a: [{ type: "text", content: "Ritardando artinya secara bertahap semakin lambat." }] },
+      { q: ["ritenuto", "riten.", "rit."], a: [{ type: "text", content: "Ritenuto artinya menahan tempo (tiba-tiba lebih lambat)." }] },
+      { q: ["staccato", "stacc."], a: [{ type: "text", content: "Staccato artinya nada dimainkan terputus-putus, singkat." }] },
+      { q: ["tempo"], a: [{ type: "text", content: "Tempo artinya kecepatan musik. Contoh: a tempo = kembali ke tempo semula." }] },
       { q: ["terima kasih"], a: [{ type: "text", content: "Sama-sama! Semangat terus ya 💪" }] }
     ];
 
@@ -180,7 +180,7 @@
       chatBox.scrollTop = chatBox.scrollHeight;
     }
 
-    // Hitung kemiripan 2 string (rasio 0-1)
+    // Hitung kemiripan 2 string
     function similarity(s1, s2) {
       let longer = s1.toLowerCase();
       let shorter = s2.toLowerCase();
@@ -221,13 +221,13 @@
       return costs[s2.length];
     }
 
-    // Cari jawaban (prioritaskan frasa lengkap)
+    // Cari jawaban
     function botReply(userText) {
       const text = userText.toLowerCase().trim();
       let replies = [];
       let bestMatch = { word: "", score: 0 };
 
-      // PRIORITAS: cek exact match dulu
+      // Exact match
       for (let item of knowledgeBase) {
         for (let keyword of item.q) {
           if (text === keyword.toLowerCase()) {
@@ -238,27 +238,37 @@
         if (replies.length > 0) break;
       }
 
-      // Kalau belum ada, cek kemiripan & kata terpisah
+      // Kalau belum ada → regex + similarity
       if (replies.length === 0) {
         for (let item of knowledgeBase) {
           for (let keyword of item.q) {
             let sim = similarity(text, keyword);
-            if (sim > bestMatch.score) {
-              bestMatch = { word: keyword, score: sim };
+
+            // Escape regex khusus untuk keyword dengan simbol
+            let regex;
+            if (/[^\w\s]/.test(keyword)) {
+              regex = new RegExp(keyword.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"), "i");
+            } else {
+              regex = new RegExp("\\b" + keyword + "\\b", "i");
             }
-            if (text.includes(keyword) || sim >= 0.5) {
+
+            if (regex.test(text) || sim >= 0.8) {
               replies.push(...item.a);
               break;
+            }
+
+            if (sim > bestMatch.score) {
+              bestMatch = { word: keyword, score: sim };
             }
           }
         }
       }
 
-      // Jika tetap kosong
+      // Kalau tetap kosong
       if (replies.length === 0) {
         replies = [{ type: "text", content: "Maaf, saya belum punya jawaban untuk itu. Coba tanyakan hal lain 😊" }];
       } else {
-        // Kalau typo tapi mirip, kasih saran
+        // Kalau typo tapi mirip
         if (bestMatch.score < 1 && bestMatch.score >= 0.5) {
           addMessage(`Maksud kamu: "${bestMatch.word}"?`, "bot");
         }
