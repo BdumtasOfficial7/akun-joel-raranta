@@ -257,7 +257,7 @@ const topics = {
   "'dim.'": {
     short: "'dim.' adalah singkatan dari diminuendo yang berarti perlahan-lahan menjadi lebih lembut.",
     long: "Istilah ini termasuk dalam tanda dinamika, yaitu tanda yang menunjukkan perubahan volume atau kekuatan suara dalam musik. Apabila ada tanda ini di partitur, maka pemain harus secara bertahap menurunkan volume suara, semakin lama semakin pelan atau semakin lembut.",
-    image: "",
+    image: "img/dim.jpg",
     vide: ""
   },
   "diminuendo": {
@@ -269,7 +269,7 @@ const topics = {
   "'dimin.'": {
     short: "'dimin.' adalah singkatan dari diminishing atau lebih tepatnya dari istilah Italia 'diminuendo' atau 'dim.', yang artinya perlahan-lahan menjadi lebih lembut.",
     long: "Istilah ini termasuk dalam tanda dinamika, yaitu tanda yang menunjukkan perubahan volume atau kekuatan suara dalam musik. Apabila ada tanda ini di partitur, maka pemain harus secara bertahap menurunkan volume suara, semakin lama semakin pelan atau semakin lembut.",
-    image: "",
+    image: "img/dimin.jpg",
     video: ""
   },
   "'e'": {
@@ -317,7 +317,7 @@ const topics = {
   "leggiero": {
     short: "Leggiero adalah istilah musik dari bahasa Italia yang berarti 'ringan' atau 'lembut'.",
     long: "Apabila ada istilah 'leggiero' di partitur maka pemain harus memainkan nada dengan ringan, halus, dan lepas. Musik harus terdengar mengalir, tidak berat, dan lentur. Nada dimainkan tidak keras, tidak ditekan, dan sedikit melayang di antara nada-nada lain.",
-    image: "",
+    image: "img/leggiero.jpg",
     video: ""
   },
   "dim. e poco rall.": {
@@ -365,7 +365,7 @@ const topics = {
   "grazioso": {
     short: "Grazioso adalah istilah musik dari bahasa Italia yang berarti 'anggun', 'lembut', atau 'menawan'.",
     long: "Grazioso berasal dari kata 'grazia' yang artinya 'keanggunan' atau 'keelokan'. Ini merupakan salah satu ekspresi musik. Apabila ada 'grazioso' di partitur, artinya pemain harus memainkan bagian itu dengan gaya yang anggun, halus, dan elegan, seperti seorang penari yang bergerak lembut dan berkelas. Gunakan sentuhan ringan dan halus, hindari nada keras atau tajam. Musik harus mengalir dengan cantik.",
-    image: "",
+    image: "img/grazioso.jpg",
     video: ""
   },
   "'8'": {
@@ -397,6 +397,14 @@ const topics = {
     long: "'tie' berfungsi untuk memperpanjang durasi dari not tersebut. Jika ada dua crotchet yang dihubungkan dengan 'tie', maka totalnya menjadi 2 ketuk. Jadinya pemain menahan nada selama 2 ketuk penuh, bukn memainkannya 2 (dua) kali.",
     image: "img/tie.jpg",
     video: "https://www.youtube.com/embed/OrgmL_2reFc"
+  },
+
+  // ==== Lagu Untuk Latihan ====
+  "latihan o holy night": {
+    video: "https://www.youtube.com/embed/CztuknpdqMU"
+  },
+  "lagu o holy night": {
+    video: "https://www.youtube.com/embed/QXmxpGbuI0Q"
   }
 };
 
@@ -494,6 +502,8 @@ function processInput(input) {
         <li>Menampilkan gambar atau video pembelajaran(misal: "tampilkan gambar/video tentang gitar"</li>
         <li>Membantu menyetem gitar (ketik: "tolong bantu saya menyetem gitar"; "stop tuner" untuk berhenti)</li>
         <li>Memainkan nada (ketik: "saya ingin dengar nada C")</li>
+        <li>Menampilkan video lagu (ketik: "tampilkan video lagu o holy night")</li>
+        <li>Menampilkan video untuk belajar lagu (ketik: "tampilkan video belajar lagu o holy night")</li>
       </ul>
 
       Catatan:
@@ -524,7 +534,7 @@ function processInput(input) {
     for (let key in topics) {
       if (input.includes(key)) return showImage(key);
     }
-    appendMessage("bot", "Maaf, saya tidak menemukan topik itu.");
+    appendMessage("bot", "Maaf, saya tidak menemukan topik itu. Apabila itu adalah singkatan atau simbol kamu bisa menambahkan kutip dua (' ') agar saya bisa mengerti.");
     return;
   }
 
@@ -532,7 +542,7 @@ function processInput(input) {
     for (let key in topics) {
       if (input.includes(key)) return showVideo(key);
     }
-    appendMessage("bot", "Maaf, saya tidak menemukan topik itu.");
+    appendMessage("bot", "Maaf, saya tidak menemukan topik itu. Apabila itu adalah singkatan atau simbol kamu bisa menambahkan kutip dua (' ') agar saya bisa mengerti.");
     return;
   }
 
