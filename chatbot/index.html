@@ -212,7 +212,7 @@ const topics = {
     image: "img/tanda_dinamika_forte_f.jpg",
     video: "https://www.youtube.com/embed/bY-GXTxNa4o"
   },
-  "'cresc.'": {
+  "'cresc'": {
     short: "'cresc.' adalah singkatan dari bahasa Italia 'crescendo' yang artinya 'semakin keras'.",
     long: "Dalam notasi musik, cresc. berfungsi untuk membuat musik dari lembut (piano) ke keras (forte). Artinya, apabila ada tanda 'cresc.' di partitur, bagian itu harus dimainkan mulai dari suara lembut, lalu perlahan-lahan menambah kekuatan atau tekanan sampai mencapai volume yang lebih kelas.\n\nSimbol lain dari 'cresc.' adalah simbol '<'.",
     image: "img/tanda_dinamika_crescendo_cresc.jpg",
@@ -552,10 +552,11 @@ function processInput(input) {
   }
 
   // "apa itu..." / "apa yang dimaksud dengan..."
-  if (input.startsWith("apa itu") || input.startsWith("apa yang dimaksud")) {
+  if (input.startsWith("apa itu") || input.startsWith("apa yang dimaksud") || input.startsWith("apa arti")) {
   // Ambil kata setelah "apa itu" atau "apa yang dimaksud dengan"
   let topicWord = input.replace("apa itu", "")
                        .replace("apa yang dimaksud dengan", "")
+                       .replace("apa arti", "")
                        .trim();
 
   // Hilangkan tanda baca jika ada
