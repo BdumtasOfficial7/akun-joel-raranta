@@ -148,7 +148,7 @@
     <button onclick="showPage('profile')">Dashboard</button>
     <button onclick="showPage('tasks')">Tugas</button>
     <button onclick="showPage('stats')">Statistik</button>
-    <button onclick="showPage('chatbot')">ChatBot</button>
+    <button onclick="showPage('belajar')">Belajar</button>
     <!-- <button onclick="alert('Sampai jumpa!')">Keluar</button> -->
   </div>
 
@@ -189,12 +189,15 @@
       <div class="bar-bg"><div class="bar-fill" style="width: 14%; background: #8EC5FC;">14%</div></div>
     </div>
   </div>
-</div>
 
-<div id="chatbot" class="page-section hidden">
-    <h2>Bincang-bincang dengan AI</h2>
+  <!-- BELAJAR -->
+<div id="belajar" class="page-section hidden">
+    <label>ChatBot</label>
     <div class="task"><a href="chatbot/index.html">Buka Chatbot</a></div>
+    <label>Songs</label>
+    <div class="task"><a href="songs/lirik.html">Buka Songs</a></div>
   </div>
+</div>
 
 <script>
   function showPage(pageId) {
