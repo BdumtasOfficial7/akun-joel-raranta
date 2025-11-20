@@ -174,12 +174,12 @@ G A A7 D A7 D D7
 [verse 1]
             Em
 Betapa hatiku
-             D     D
-berterima kasih Yesus
+A             D     D
+ berterima kasih Yesus
               Em
 Kau mengasihiku
-             D
-Kau memilikiku
+A             D
+ Kau memilikiku
 
 [chorus]
              G              A
